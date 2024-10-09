@@ -3,9 +3,9 @@
     <!-- Calculator screen -->
     <div class="w-full h-50  bg-black text-right">
       <!-- function screen -->
-      <div class="w-full py-4 px-6 text-2xl text-white font-thin">Function</div>
+      <div class="w-full py-4 px-6 text-2xl text-white font-thin">{{currentOperation }}</div>
       <!-- number screen -->
-      <div class="w-full py-5 px-6 text-6xl text-white font-thin">100</div>
+      <div class="w-full py-5 px-6 text-6xl text-white font-thin">{{ displayValue}}</div>
     </div>
     <!-- end calculator screen -->
     <hr>
@@ -13,25 +13,27 @@
     <div class="w-full bg-black pt-4 pb-4">
       <!-- first button row -->
       <div class="flex w-full mx-4">
-        <!-- clear button -->
+        <!-- all clear button -->
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-400  hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">AC</button>
+            style="border-radius: 50%;" (click)="onButtonClick('AC','function')">AC</button>
         </div>
-        <!-- end clear button -->
+        <!-- end all clear button -->
+        <!-- clear button -->
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-400 hover:opacity-50  text-white text-2xl font-bold"
-            style="border-radius: 50%;">C</button>
+            style="border-radius: 50%;" (click)="onButtonClick('C','function')">C</button>
         </div>
+        <!-- end clear button -->
         <!-- percentage button -->
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-400 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">%</button>
+            style="border-radius: 50%;" (click)="onButtonClick('%','function')">%</button>
         </div>
         <!-- division button -->
         <div class="w-1/4 p-2">
-          <button class="w-20 h-20 rounded-full bg-orange-400 hover:opacity-50 text-white text-4xl font-bold"
-            style="border-radius: 50%;">÷</button>
+          <button class="w-20 h-20 rounded-full bg-orange-400 hover:opacity-50 text-white text-2xl font-bold"
+            style="border-radius: 50%;" (click)="onButtonClick('/','function')">/</button>
         </div>
       </div>
 
@@ -39,19 +41,19 @@
       <div class="flex w-full mx-4">
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">7</button>
+            style="border-radius: 50%;" (click)="onButtonClick('7','number')">7</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">8</button>
+            style="border-radius: 50%;" (click)="onButtonClick('8','number')">8</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">9</button>
+            style="border-radius: 50%;" (click)="onButtonClick('9','number')">9</button>
         </div>
         <div class="w-1/4 p-2">
-          <button class="w-20 h-20 rounded-full bg-orange-400 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">X</button>
+          <button class="w-20 h-20 rounded-full bg-orange-400 hover:opacity-50 text-white text-3xl font-bold"
+            style="border-radius: 50%;" (click)="onButtonClick('*','function')">*</button>
         </div>
       </div>
 
@@ -59,19 +61,19 @@
       <div class="flex w-full mx-4">
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">4</button>
+            style="border-radius: 50%;" (click)="onButtonClick('4','number')">4</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">5</button>
+            style="border-radius: 50%;" (click)="onButtonClick('5','number')">5</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">6</button>
+            style="border-radius: 50%;" (click)="onButtonClick('6','number')">6</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-orange-400 hover:opacity-50 text-white text-6xl font-mono"
-            style="border-radius: 50%;">-</button>
+            style="border-radius: 50%;" (click)="onButtonClick('-','function')">-</button>
         </div>
       </div>
 
@@ -79,38 +81,38 @@
       <div class="flex w-full mx-4">
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">1</button>
+            style="border-radius: 50%;" (click)="onButtonClick('1','number')">1</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">2</button>
+            style="border-radius: 50%;" (click)="onButtonClick('2','number')">2</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">3</button>
+            style="border-radius: 50%;" (click)="onButtonClick('3','number')">3</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-orange-400 hover:opacity-50 text-white text-4xl font-bold"
-            style="border-radius: 50%;">+</button>
+            style="border-radius: 50%;" (click)="onButtonClick('+','function')">+</button>
         </div>
       </div>
       <!-- fifth button row -->
       <div class="flex w-full mx-4">
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">0</button>
+            style="border-radius: 50%;" (click)="onButtonClick('0','number')">0</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-bold"
-            style="border-radius: 50%;">00</button>
+            style="border-radius: 50%;" (click)="onButtonClick('00','number')">00</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-gray-700 hover:opacity-50 text-white text-2xl font-extrabold"
-            style="border-radius: 50%;">.</button>
+            style="border-radius: 50%;" (click)="onButtonClick('.','number')">.</button>
         </div>
         <div class="w-1/4 p-2">
           <button class="w-20 h-20 rounded-full bg-orange-400 hover:opacity-50 text-white text-4xl font-mono"
-            style="border-radius: 50%;">=</button>
+            style="border-radius: 50%;" (click)="onButtonClick('=','function')">=</button>
         </div>
       </div>
     </div>
