@@ -1,1 +1,13 @@
+.overflow-y-auto {
+    overflow: auto;
+    scrollbar-width: thin;
+}
 
+.overflow-y-auto::-webkit-scrollbar {
+    width: 8px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #4a4a4a;
+    border-radius: 10px;
+}

@@ -1,120 +1,95 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-calculator',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './calculator.component.html',
   styleUrl: './calculator.component.css'
 })
-export class CalculatorComponent {
-  displayValue: number = 0; //show on the screen
-  currentOperation: string = 'None';//keep track of the operation
-  inputValue: string = '';//hold current 
-  firstOperand: number = 0;//store the first operand
-  secondOperand: number = 0;//store the second operand
 
-  //handle click event for numbers and functions
+export class CalculatorComponent {
+  displayValue: string = ''; // Store the entire calculation string
+  calculationHistory: { expression: string; result: number }[] = []; // Store history
+  showHistory: boolean = false; // Track visibility of history
+  isResultDisplayed: boolean = false; // Track if the result is currently displayed
+
+  // Handle click event for numbers and functions
   onButtonClick(value: string, type: 'number' | 'function'): void {
-    if (type === 'number') {
+    if (value === 'History' && type === 'function') {
+      this.showHistory = !this.showHistory;
+    } else if (type === 'number') {
       this.onNumberClick(value);
     } else if (type === 'function') {
       this.onFunctionClick(value);
     }
   }
 
-  //number click
+  // Append number to display
   onNumberClick(value: string): void {
-    if (this.inputValue !== '') {
-      this.inputValue += value;//concatenate  
-    } else {
-      this.inputValue = value;//start new number
+    if (this.isResultDisplayed) {
+      this.displayValue = '';// Clear the display if a result was just shown
+      this.isResultDisplayed = false;// Reset the flag
     }
-    this.displayValue = parseFloat(this.inputValue);//update display
+    this.displayValue += value; // Build the expression as a string
   }
 
-  //function click
+  // Handle function buttons
   onFunctionClick(value: string): void {
     if (value === 'AC') {
       this.resetCalculator();
     } else if (value === 'C') {
       this.clearCurrent();
-    } else if (this.currentOperation === 'None') {
-      // Store first operand and operation
-      this, this.firstOperand = this.displayValue;
-      this.currentOperation = value;
-      this.clearCurrentInput();
+    } else if (value === '=') {
+      this.calculateResult();
+
     } else {
-      this.secondOperand = this.displayValue;
-      this.performCalculation(value);
+      this.displayValue += ` ${value} `; // Append the operator
     }
-
   }
 
-  //perform calculation
-  performCalculation(nextOperation: string): void {
-    let result: number;
-    switch (this.currentOperation) {
-      case '+':
-        result = this.firstOperand + this.secondOperand;
-        break;
-      case '-':
-        result = this.firstOperand - this.secondOperand;
-        break;
-      case '*':
-        result = this.firstOperand * this.secondOperand;
-        break;
-      case '/':
-        result = this.firstOperand / this.secondOperand;
-        break;
-      case '%':
-        result = this.firstOperand % this.secondOperand;
-        break;
-      default:
-        return;
-    }
+  // Perform the calculation
+  calculateResult(): void {
+    try {
+      const result = this.evaluateExpression(this.displayValue);
 
-    this.updateValuesAfterCalculation(result, nextOperation);
+      // Add to history
+      this.calculationHistory.push({
+        expression: this.displayValue,
+        result: result
+      });
+
+      // Show result and set the flag
+      this.displayValue = result.toString();
+      this.isResultDisplayed = true;
+
+    } catch (error) {
+      this.displayValue = 'Error';
+    }
   }
 
-  updateValuesAfterCalculation(result: number, nextOperation: string): void {
-    this.displayValue = result;
-    this.firstOperand = result;
-    this.secondOperand = 0;
-    this.clearCurrentInput();
-    this.currentOperation = nextOperation;
+  // calculation
+  evaluateExpression(expression: string): number {
+    // Replace symbols for easier parsing
+    expression = expression.replace(/×/g, '*').replace(/÷/g, '/');
 
-    if (nextOperation === '=') {
-      this.resetOperation();
-
-    }
-
+    // Use Function constructor for a safe calculation 
+    const fn = new Function('return ' + expression);
+    return fn();
   }
 
-  //Reset calculator
+  // Reset calculator
   resetCalculator(): void {
-    this.firstOperand = 0;
-    this.secondOperand = 0;
-    this.displayValue = 0;
-    this.currentOperation = 'None';
-    this.clearCurrentInput();
+    this.displayValue = '';
+    this.calculationHistory = [];
+    this.isResultDisplayed = false;
   }
 
-  //Reset operation
-  resetOperation(): void {
-    this.currentOperation = 'None';
-    this.clearCurrentInput();
-  }
-
-  //clear the current input
-  clearCurrentInput(): void {
-    this.inputValue = '';
-  }
-
-  //clear only the most recent input
+  // Clear only the most recent input
   clearCurrent(): void {
-    this.displayValue = 0;
-    this.inputValue = '';
-    this.secondOperand = 0;
+    this.displayValue = this.displayValue.slice(0, -1);
   }
+
+
 }
