@@ -1,4 +1,7 @@
-<div class="min-w-screen min-h-screen bg-black flex items-center justify-center">
+<div class="min-w-screen min-h-screen bg-black flex flex-col items-center justify-center">
+  <!-- Heading moved above calculator -->
+  <h1 class="text-white text-center text-4xl mb-5">Calculator</h1>
+
   <div class="w-full mx-auto border-2 rounded-3xl shadow-xl relative overflow-hidden" style="max-width: 500px">
     <!-- Calculator screen -->
     <div class="w-full h-50 bg-black">
@@ -26,7 +29,7 @@
       <!-- Display Screen Section -->
       <div *ngIf="!showHistory" class="w-full h-50 bg-black text-right">
         <!-- Display the entire expression -->
-        <div class="w-full py-5 px-6 text-6xl text-white font-thin">{{ displayValue }}</div>
+        <div class="w-full py-5 px-6 text-4xl text-white font-bold">{{ displayValue }}</div>
       </div>
     </div>
 
@@ -38,13 +41,13 @@
       <div class="flex w-full mx-4">
         <!-- all clear button -->
         <div class="w-1/4 p-2">
-          <button class="w-20 h-20 rounded-full bg-gray-400  hover:opacity-50 text-white text-2xl font-bold"
+          <button class="w-20 h-20 rounded-full bg-gray-400 hover:opacity-50 text-white text-2xl font-bold"
             style="border-radius: 50%;" (click)="onButtonClick('AC','function')">AC</button>
         </div>
         <!-- end all clear button -->
         <!-- clear button -->
         <div class="w-1/4 p-2">
-          <button class="w-20 h-20 rounded-full bg-gray-400 hover:opacity-50  text-white text-2xl font-bold"
+          <button class="w-20 h-20 rounded-full bg-gray-400 hover:opacity-50 text-white text-2xl font-bold"
             style="border-radius: 50%;" (click)="onButtonClick('C','function')">C</button>
         </div>
         <!-- end clear button -->
