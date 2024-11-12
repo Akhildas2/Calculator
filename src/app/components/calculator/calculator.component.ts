@@ -8,7 +8,6 @@ import { Component } from '@angular/core';
   templateUrl: './calculator.component.html',
   styleUrl: './calculator.component.css'
 })
-
 export class CalculatorComponent {
   displayValue: string = ''; // Store the entire calculation string
   calculationHistory: { expression: string; result: number }[] = []; // Store history
@@ -29,8 +28,8 @@ export class CalculatorComponent {
   // Append number to display
   onNumberClick(value: string): void {
     if (this.isResultDisplayed) {
-      this.displayValue = '';// Clear the display if a result was just shown
-      this.isResultDisplayed = false;// Reset the flag
+      this.displayValue = ''; // Clear the display if a result was just shown
+      this.isResultDisplayed = false; // Reset the flag
     }
     this.displayValue += value; // Build the expression as a string
   }
@@ -43,8 +42,10 @@ export class CalculatorComponent {
       this.clearCurrent();
     } else if (value === '=') {
       this.calculateResult();
-
     } else {
+      if (this.isResultDisplayed) {
+        this.isResultDisplayed = false; // Reset the flag for new operation
+      }
       this.displayValue += ` ${value} `; // Append the operator
     }
   }
@@ -69,12 +70,12 @@ export class CalculatorComponent {
     }
   }
 
-  // calculation
+  // Calculation
   evaluateExpression(expression: string): number {
     // Replace symbols for easier parsing
     expression = expression.replace(/×/g, '*').replace(/÷/g, '/');
 
-    // Use Function constructor for a safe calculation 
+    // Use Function constructor for a safe calculation
     const fn = new Function('return ' + expression);
     return fn();
   }
@@ -90,6 +91,4 @@ export class CalculatorComponent {
   clearCurrent(): void {
     this.displayValue = this.displayValue.slice(0, -1);
   }
-
-
 }
